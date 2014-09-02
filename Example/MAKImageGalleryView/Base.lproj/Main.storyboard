@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="MAKViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZR-mh-Byh" customClass="MAKImageGalleryView">
+                                <rect key="frame" x="49" y="71" width="222" height="165"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="222" id="7k4-F4-HWq"/>
+                                    <constraint firstAttribute="height" constant="165" id="QOp-Os-Aeh"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User interacted" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2iN-7i-Rp1">
+                                <rect key="frame" x="50" y="30" width="118" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatically animated" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wnn-HI-1xQ">
+                                <rect key="frame" x="50" y="286" width="180" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gL0-6j-VTk" customClass="MAKImageGalleryView">
+                                <rect key="frame" x="110" y="327" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="h9J-dQ-v6k"/>
+                                    <constraint firstAttribute="width" constant="100" id="kW7-t9-F5e"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="wZR-mh-Byh" secondAttribute="centerX" id="Cbd-tY-0MX"/>
+                            <constraint firstItem="2iN-7i-Rp1" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="10" id="Kda-ej-5mp"/>
+                            <constraint firstAttribute="centerX" secondItem="gL0-6j-VTk" secondAttribute="centerX" id="Qp3-Pv-Xnj"/>
+                            <constraint firstItem="2iN-7i-Rp1" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="50" id="Wqf-Mr-VnY"/>
+                            <constraint firstItem="gL0-6j-VTk" firstAttribute="top" secondItem="Wnn-HI-1xQ" secondAttribute="bottom" constant="20" id="a4l-Df-qGy"/>
+                            <constraint firstItem="Wnn-HI-1xQ" firstAttribute="top" secondItem="wZR-mh-Byh" secondAttribute="bottom" constant="50" id="a71-7A-NJQ"/>
+                            <constraint firstItem="wZR-mh-Byh" firstAttribute="top" secondItem="2iN-7i-Rp1" secondAttribute="bottom" constant="20" id="dAc-ou-Ud7"/>
+                            <constraint firstItem="Wnn-HI-1xQ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="50" id="xww-yb-m4Q"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="animatedImageGalleryView" destination="gL0-6j-VTk" id="0gI-rU-pHd"/>
+                        <outlet property="imageGalleryView" destination="wZR-mh-Byh" id="lxj-Dg-eba"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="74" y="183"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
