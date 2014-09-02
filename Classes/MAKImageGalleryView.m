@@ -27,7 +27,7 @@ static NSString *const kImageCellReusableId = @"imageCell";
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame collectionViewLayout:[self createLayout]];
     if (self) {
         [self initialize];
     }
@@ -36,6 +36,7 @@ static NSString *const kImageCellReusableId = @"imageCell";
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
+        self.collectionViewLayout = [self createLayout];
         [self initialize];
     }
     return self;
@@ -52,7 +53,6 @@ static NSString *const kImageCellReusableId = @"imageCell";
     self.delegate = self;
     self.pagingEnabled = YES;
     self.allowsSelection = NO;
-    self.collectionViewLayout = [self createLayout];
     [self registerClass:[MAKImageGalleryViewImageCell class] forCellWithReuseIdentifier:kImageCellReusableId];
     self.clipsToBounds = YES;
     self.showsHorizontalScrollIndicator = NO;
@@ -120,7 +120,7 @@ static NSString *const kImageCellReusableId = @"imageCell";
         UIImage *const image = [self.imageGalleryDataSource imageInGalery:self atIndex:indexPath.row];
         res.image = image;
         res.imageLoadingOperation = nil;
-    
+        
     }];
     [[NSOperationQueue mainQueue] addOperation:res.imageLoadingOperation];
     
