@@ -12,6 +12,9 @@
 
 @protocol MAKImageGalleryViewDataSource <NSObject>
 - (NSInteger)numberOfImagesInGallery:(MAKImageGalleryView *)galleryView;
+/**
+ * This method have to return image. Method called asynchronously
+ */
 - (UIImage *)imageInGalery:(MAKImageGalleryView *)galleryView atIndex:(NSInteger)index;
 @optional
 - (UIViewContentMode)imageGallery:(MAKImageGalleryView *)galleryView contentModeForImageAtIndex:(NSInteger)index;

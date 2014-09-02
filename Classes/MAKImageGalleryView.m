@@ -14,6 +14,7 @@ static NSString *const kImageCellReusableId = @"imageCell";
 
 @interface MAKImageGalleryViewImageCell : UICollectionViewCell
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) NSOperation *imageLoadingOperation;
 @end
 
 @interface MAKImageGalleryView () <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -111,7 +112,18 @@ static NSString *const kImageCellReusableId = @"imageCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MAKImageGalleryViewImageCell *res = [collectionView dequeueReusableCellWithReuseIdentifier:kImageCellReusableId forIndexPath:indexPath];
-    res.image = [self.imageGalleryDataSource imageInGalery:self atIndex:indexPath.row];
+    
+    [res.imageLoadingOperation cancel];
+    res.image = nil;
+    
+    res.imageLoadingOperation = [NSBlockOperation blockOperationWithBlock:^{
+        UIImage *const image = [self.imageGalleryDataSource imageInGalery:self atIndex:indexPath.row];
+        res.image = image;
+        res.imageLoadingOperation = nil;
+    
+    }];
+    [[NSOperationQueue mainQueue] addOperation:res.imageLoadingOperation];
+    
     if ([self.imageGalleryDataSource respondsToSelector:@selector(imageGallery:contentModeForImageAtIndex:)]) {
         res.contentMode = [self.imageGalleryDataSource imageGallery:self contentModeForImageAtIndex:indexPath.row];
     }
