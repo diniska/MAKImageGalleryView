@@ -17,10 +17,10 @@ Pod::Spec.new do |s|
 
   s.name         = "MAKImageGalleryView"
   s.version      = "0.0.1"
-  s.summary      = "A short description of MAKImageGalleryView."
+  s.summary      = "Image gallery for iOS apps, that allows to show images animated or user interacted"
 
   s.description  = <<-DESC
-					Image gallery for iOS apps, that allows to show images animated or user interacted
+					Image gallery for iOS apps, that allows to show images animated or user interacted. That gallery scrolling your image horizontally
                    DESC
 
   s.homepage     = "https://github.com/diniska/MAKImageGalleryView"
