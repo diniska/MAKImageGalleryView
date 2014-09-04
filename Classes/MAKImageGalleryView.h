@@ -12,12 +12,17 @@
 
 @protocol MAKImageGalleryViewDataSource <NSObject>
 - (NSInteger)numberOfImagesInGallery:(MAKImageGalleryView *)galleryView;
+@optional
+- (UIViewContentMode)imageGallery:(MAKImageGalleryView *)galleryView contentModeForImageAtIndex:(NSInteger)index;
 /**
  * This method have to return image. Method called asynchronously
  */
 - (UIImage *)imageInGalery:(MAKImageGalleryView *)galleryView atIndex:(NSInteger)index;
-@optional
-- (UIViewContentMode)imageGallery:(MAKImageGalleryView *)galleryView contentModeForImageAtIndex:(NSInteger)index;
+/**
+ * You have to implement this method or -imageInGalery:atIndex: 
+ * Priority of method -imageInGalery:atIndex: is bigger
+ */
+- (void)loadImageInGallery:(MAKImageGalleryView *)galleryView atIndex:(NSInteger)index callback:(void(^)(UIImage *))callback;
 @end
 
 
@@ -30,4 +35,6 @@
  * Used when changeImagesAutormatically = YES
  */
 @property (assign, nonatomic) NSTimeInterval imageChangingDelay;
+@property (assign, nonatomic) NSInteger selectedIndex;
+- (void)setSelectedIndex:(NSInteger)selectedIndex animated:(BOOL)animated;
 @end

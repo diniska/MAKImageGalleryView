@@ -15,6 +15,7 @@ static NSString *const kImageCellReusableId = @"imageCell";
 @interface MAKImageGalleryViewImageCell : UICollectionViewCell
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) NSOperation *imageLoadingOperation;
+@property (assign, nonatomic) NSUInteger blockLoadingId;
 @end
 
 @interface MAKImageGalleryView () <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -90,7 +91,11 @@ static NSString *const kImageCellReusableId = @"imageCell";
 }
 
 - (void)updatePageControlCurrentPositionWithoutAnimation {
-    self.pageControl.currentPage = (self.contentOffset.x + self.bounds.size.width / 2) / ( self.contentSize.width / self.pageControl.numberOfPages);
+    if (self.pageControl.numberOfPages != 0) {
+        const CGFloat onePageWidth = self.bounds.size.width;
+        const CGFloat currentPageCenterOffset = (self.contentOffset.x + self.bounds.size.width / 2);
+        self.pageControl.currentPage = currentPageCenterOffset / onePageWidth;
+    }
 }
 
 - (void)updatePageControlFrame {
@@ -110,6 +115,31 @@ static NSString *const kImageCellReusableId = @"imageCell";
     [[NSRunLoop mainRunLoop] addTimer:self.imageChangingTimer forMode:NSRunLoopCommonModes];
 }
 
+- (void)loadImageForRow:(NSInteger)row withOperationToCell:(MAKImageGalleryViewImageCell *)cell {
+    cell.imageLoadingOperation = [NSBlockOperation blockOperationWithBlock:^{
+        UIImage *const image = [self.imageGalleryDataSource imageInGalery:self atIndex:row];
+        cell.image = image;
+        cell.imageLoadingOperation = nil;
+    }];
+    [[NSOperationQueue mainQueue] addOperation:cell.imageLoadingOperation];
+}
+
+- (void)loadImageForRow:(NSInteger)row withBlockToCell:(MAKImageGalleryViewImageCell *)cell {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSUInteger key = random();
+        cell.blockLoadingId = key;
+        [self.imageGalleryDataSource loadImageInGallery:self atIndex:row callback:^(UIImage *image) {
+            if (cell.blockLoadingId == key) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (cell.blockLoadingId == key) { //if still not reused
+                        cell.image = image;
+                    }
+                });
+            }
+        }];
+    });
+}
+
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self.imageGalleryDataSource numberOfImagesInGallery:self];
@@ -118,16 +148,12 @@ static NSString *const kImageCellReusableId = @"imageCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MAKImageGalleryViewImageCell *res = [collectionView dequeueReusableCellWithReuseIdentifier:kImageCellReusableId forIndexPath:indexPath];
     
-    [res.imageLoadingOperation cancel];
-    res.image = nil;
+    if ([self.imageGalleryDataSource respondsToSelector:@selector(imageInGalery:atIndex:)]) {
+        [self loadImageForRow:indexPath.row withOperationToCell:res];
+    } else if ([self.imageGalleryDataSource respondsToSelector:@selector(loadImageInGallery:atIndex:callback:)]) {
+        [self loadImageForRow:indexPath.row withBlockToCell:res];
+    }
     
-    res.imageLoadingOperation = [NSBlockOperation blockOperationWithBlock:^{
-        UIImage *const image = [self.imageGalleryDataSource imageInGalery:self atIndex:indexPath.row];
-        res.image = image;
-        res.imageLoadingOperation = nil;
-        
-    }];
-    [[NSOperationQueue mainQueue] addOperation:res.imageLoadingOperation];
     
     if ([self.imageGalleryDataSource respondsToSelector:@selector(imageGallery:contentModeForImageAtIndex:)]) {
         res.contentMode = [self.imageGalleryDataSource imageGallery:self contentModeForImageAtIndex:indexPath.row];
@@ -163,9 +189,23 @@ static NSString *const kImageCellReusableId = @"imageCell";
     }
 }
 
+- (void)setSelectedIndex:(NSInteger)selectedIndex {
+    [self setSelectedIndex:selectedIndex animated:NO];
+}
+
+- (void)setSelectedIndex:(NSInteger)selectedIndex animated:(BOOL)animated {
+    if (self.selectedIndex != selectedIndex) {
+        [self moveToPageAnimated:selectedIndex animated:animated];
+    }
+}
+
 #pragma mark - Getters
 - (BOOL)changeImagesAutormatically {
     return self.imageChangingTimer != nil;
+}
+
+- (NSInteger)selectedIndex {
+    return self.pageControl.currentPage;
 }
 
 #pragma mark - Timer events
@@ -188,16 +228,17 @@ static NSString *const kImageCellReusableId = @"imageCell";
 }
 
 - (void)moveToNextImageAnimated {
-    [self moveToPageAnimated:self.pageControl.currentPage + 1];
+    [self moveToPageAnimated:self.pageControl.currentPage + 1 animated:YES];
 }
 
 - (void)moveToPreviousImageAnimated {
-    [self moveToPageAnimated:self.pageControl.currentPage - 1];
+    [self moveToPageAnimated:self.pageControl.currentPage - 1 animated:YES];
 }
 
-- (void)moveToPageAnimated:(NSInteger)pageNumber {
-    [self scrollRectToVisible:(CGRect){pageNumber * self.bounds.size.width, 0, self.bounds.size} animated:YES];
+- (void)moveToPageAnimated:(NSInteger)pageNumber animated:(BOOL)animated {
+    [self scrollRectToVisible:(CGRect){pageNumber * self.bounds.size.width, 0, self.bounds.size} animated:animated];
 }
+
 @end
 
 @implementation MAKImageGalleryViewImageCell {
@@ -214,5 +255,12 @@ static NSString *const kImageCellReusableId = @"imageCell";
 
 - (UIImage *)image {
     return _imageView.image;
+}
+
+- (void)prepareForReuse {
+    _imageView.image = nil;
+    [_imageLoadingOperation cancel];
+    _imageLoadingOperation = nil;
+    _blockLoadingId = 0;
 }
 @end
