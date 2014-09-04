@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "MAKImageGalleryView"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "Image gallery for iOS apps, that allows to show images animated or user interacted"
 
   s.description  = <<-DESC
@@ -73,7 +73,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/diniska/MAKImageGalleryView.git", :tag => "0.0.3" }
+  s.source       = { :git => "https://github.com/diniska/MAKImageGalleryView.git", :tag => "0.0.4" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
