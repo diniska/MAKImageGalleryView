@@ -14,6 +14,7 @@ static NSString *const kImageCellReusableId = @"imageCell";
 
 @interface MAKImageGalleryViewImageCell : UICollectionViewCell
 @property (strong, nonatomic) UIImage *image;
+@property (assign, nonatomic) UIViewContentMode imageContentMode;
 @property (strong, nonatomic) NSOperation *imageLoadingOperation;
 @property (assign, nonatomic) NSUInteger blockLoadingId;
 @end
@@ -156,7 +157,7 @@ static NSString *const kImageCellReusableId = @"imageCell";
     
     
     if ([self.imageGalleryDataSource respondsToSelector:@selector(imageGallery:contentModeForImageAtIndex:)]) {
-        res.contentMode = [self.imageGalleryDataSource imageGallery:self contentModeForImageAtIndex:indexPath.row];
+        res.imageContentMode = [self.imageGalleryDataSource imageGallery:self contentModeForImageAtIndex:indexPath.row];
     }
     return res;
 }
@@ -243,11 +244,13 @@ static NSString *const kImageCellReusableId = @"imageCell";
 
 @implementation MAKImageGalleryViewImageCell {
     UIImageView *_imageView;
+    UIViewContentMode _imageContentMode;
 }
 - (void)setImage:(UIImage *)image {
     if (_imageView == nil) {
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _imageView.contentMode = self.imageContentMode;
         [self addSubview:_imageView];
     }
     _imageView.image = image;
@@ -258,9 +261,16 @@ static NSString *const kImageCellReusableId = @"imageCell";
 }
 
 - (void)prepareForReuse {
-    _imageView.image = nil;
     [_imageLoadingOperation cancel];
+    _imageView.image = nil;
     _imageLoadingOperation = nil;
     _blockLoadingId = 0;
+    _imageContentMode = UIViewContentModeScaleToFill;
+    _imageView.contentMode = _imageContentMode;
+}
+
+- (void)setImageContentMode:(UIViewContentMode)imageContentMode {
+    _imageContentMode = imageContentMode;
+    _imageView.contentMode = imageContentMode;
 }
 @end
