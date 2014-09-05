@@ -251,6 +251,7 @@ static NSString *const kImageCellReusableId = @"imageCell";
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _imageView.contentMode = self.imageContentMode;
+        _imageView.clipsToBounds = YES;
         [self addSubview:_imageView];
     }
     _imageView.image = image;
