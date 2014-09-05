@@ -47,4 +47,6 @@ The result is:
 
 ![image alt][1]
 
+All pictures for example app taken from [@diniska instagram](http://instagram.com/diniska)
+
 [1]: https://raw.githubusercontent.com/diniska/MAKImageGalleryView/master/Screens/screen1.png
