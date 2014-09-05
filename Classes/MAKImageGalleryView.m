@@ -141,6 +141,15 @@ static NSString *const kImageCellReusableId = @"imageCell";
     });
 }
 
+- (void)updateAnimationTimer {
+    if (self.changeImagesAutormatically && self.imageChangingDelay > 0) {
+        [self createAndStartImageChangingTimerWithInterval:self.imageChangingDelay];
+    } else {
+        [self.imageChangingTimer invalidate];
+        self.imageChangingTimer = nil;
+    }
+}
+
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self.imageGalleryDataSource numberOfImagesInGallery:self];
@@ -179,15 +188,11 @@ static NSString *const kImageCellReusableId = @"imageCell";
 
 #pragma mark - Setters
 - (void)setChangeImagesAutormatically:(BOOL)changeImagesAutormatically {
-    if (self.changeImagesAutormatically == changeImagesAutormatically) {
+    if (_changeImagesAutormatically == changeImagesAutormatically) {
         return;
     }
-    if (changeImagesAutormatically) {
-        [self createAndStartImageChangingTimerWithInterval:self.imageChangingDelay];
-    } else {
-        [self.imageChangingTimer invalidate];
-        self.imageChangingTimer = nil;
-    }
+    _changeImagesAutormatically = changeImagesAutormatically;
+    [self updateAnimationTimer];
 }
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex {
@@ -200,10 +205,15 @@ static NSString *const kImageCellReusableId = @"imageCell";
     }
 }
 
-#pragma mark - Getters
-- (BOOL)changeImagesAutormatically {
-    return self.imageChangingTimer != nil;
+- (void)setImageChangingDelay:(NSTimeInterval)imageChangingDelay {
+    if (_imageChangingDelay == imageChangingDelay) {
+        return;
+    }
+    _imageChangingDelay = imageChangingDelay;
+    [self updateAnimationTimer];
 }
+
+#pragma mark - Getters
 
 - (NSInteger)selectedIndex {
     return self.pageControl.currentPage;
