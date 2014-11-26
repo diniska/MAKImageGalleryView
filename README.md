@@ -1,6 +1,9 @@
 MAKImageGalleryView
 ===================
 
+[![CI Status](http://img.shields.io/travis/diniska/MAKImageGalleryView.svg?style=flat)](https://travis-ci.org/diniska/MAKImageGalleryView)
+[![Version](https://img.shields.io/cocoapods/v/MAKImageGalleryView.svg?style=flat)](http://cocoadocs.org/docsets/MAKImageGalleryView)
+
 Image gallery for iOS apps, that allows to show images animated or user interacted
 
 ## Installation
