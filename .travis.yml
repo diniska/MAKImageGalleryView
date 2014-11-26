@@ -2,3 +2,4 @@ language: objective-c
 
 xcode_project: Example/MAKImageGalleryView.xcodeproj # path to your xcodeproj folder
 xcode_scheme: MAKImageGalleryView
+xcode_sdk: iphonesimulator
