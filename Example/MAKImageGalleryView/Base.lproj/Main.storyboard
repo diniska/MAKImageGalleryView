@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,29 +20,24 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZR-mh-Byh" customClass="MAKImageGalleryView">
                                 <rect key="frame" x="49" y="71" width="222" height="165"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="222" id="7k4-F4-HWq"/>
                                     <constraint firstAttribute="height" constant="165" id="QOp-Os-Aeh"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User interacted" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2iN-7i-Rp1">
                                 <rect key="frame" x="50" y="30" width="118" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatically animated" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wnn-HI-1xQ">
                                 <rect key="frame" x="50" y="286" width="180" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gL0-6j-VTk" customClass="MAKImageGalleryView">
                                 <rect key="frame" x="110" y="327" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="h9J-dQ-v6k"/>
@@ -56,8 +53,10 @@
                             <constraint firstItem="2iN-7i-Rp1" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="50" id="Wqf-Mr-VnY"/>
                             <constraint firstItem="gL0-6j-VTk" firstAttribute="top" secondItem="Wnn-HI-1xQ" secondAttribute="bottom" constant="20" id="a4l-Df-qGy"/>
                             <constraint firstItem="Wnn-HI-1xQ" firstAttribute="top" secondItem="wZR-mh-Byh" secondAttribute="bottom" constant="50" id="a71-7A-NJQ"/>
+                            <constraint firstItem="wZR-mh-Byh" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="33" id="bAF-ec-K5H"/>
                             <constraint firstItem="wZR-mh-Byh" firstAttribute="top" secondItem="2iN-7i-Rp1" secondAttribute="bottom" constant="20" id="dAc-ou-Ud7"/>
                             <constraint firstItem="Wnn-HI-1xQ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="50" id="xww-yb-m4Q"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wZR-mh-Byh" secondAttribute="trailing" constant="33" id="yyt-t3-B0P"/>
                         </constraints>
                     </view>
                     <connections>

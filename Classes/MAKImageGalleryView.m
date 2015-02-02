@@ -61,9 +61,12 @@ static NSString *const kImageCellReusableId = @"imageCell";
     self.showsVerticalScrollIndicator = NO;
 }
 
-- (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
-    [(UICollectionViewFlowLayout *)self.collectionViewLayout setItemSize:self.bounds.size];
+- (void)setBounds:(CGRect)bounds {
+    CGRect previous = self.bounds;
+    [super setBounds:bounds];
+    if (!CGSizeEqualToSize(previous.size, bounds.size)) {
+        [(UICollectionViewFlowLayout *)self.collectionViewLayout setItemSize:self.bounds.size];
+    }
 }
 
 #pragma mark - Private
