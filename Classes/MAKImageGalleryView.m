@@ -187,6 +187,14 @@ static NSString *const kImageCellReusableId = @"imageCell";
     [self updatePageControlNumberOfPages];
     [self updatePageControlCurrentPositionAnimated:NO];
     [self updatePageControlFrame];
+    
+    if (_pageTintColor) self.pageControl.pageIndicatorTintColor = _pageTintColor;
+    if (_currentPageTintColor) self.pageControl.currentPageIndicatorTintColor = _currentPageTintColor;
+}
+
+-(void)layoutSubviews {
+    [super layoutSubviews];
+    ((UICollectionViewFlowLayout*)self.collectionViewLayout).itemSize = self.bounds.size;
 }
 
 #pragma mark - Setters
@@ -214,6 +222,18 @@ static NSString *const kImageCellReusableId = @"imageCell";
     }
     _imageChangingDelay = imageChangingDelay;
     [self updateAnimationTimer];
+}
+
+-(void)setPageTintColor:(UIColor *)pageTintColor {
+    if (!pageTintColor) return;
+    _pageTintColor = pageTintColor;
+    self.pageControl.pageIndicatorTintColor = pageTintColor;
+}
+
+-(void)setCurrentPageTintColor:(UIColor *)currentPageTintColor {
+    if (!currentPageTintColor) return;
+    _currentPageTintColor = currentPageTintColor;
+    self.pageControl.currentPageIndicatorTintColor = currentPageTintColor;
 }
 
 #pragma mark - Getters
@@ -287,4 +307,5 @@ static NSString *const kImageCellReusableId = @"imageCell";
     _imageContentMode = imageContentMode;
     _imageView.contentMode = imageContentMode;
 }
+
 @end

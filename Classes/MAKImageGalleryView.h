@@ -26,7 +26,7 @@
 @end
 
 
-@interface MAKImageGalleryView : UICollectionView
+@interface MAKImageGalleryView : UICollectionView <UIAppearance>
 @property (weak, nonatomic) id<MAKImageGalleryViewDataSource> imageGalleryDataSource;
 @property (assign, nonatomic) BOOL changeImagesAutormatically;
 /**
@@ -37,4 +37,7 @@
 @property (assign, nonatomic) NSTimeInterval imageChangingDelay;
 @property (assign, nonatomic) NSInteger selectedIndex;
 - (void)setSelectedIndex:(NSInteger)selectedIndex animated:(BOOL)animated;
+
+@property (nonatomic) UIColor* pageTintColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic) UIColor* currentPageTintColor UI_APPEARANCE_SELECTOR;
 @end
