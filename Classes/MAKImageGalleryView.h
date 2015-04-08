@@ -25,9 +25,15 @@
 - (void)loadImageInGallery:(MAKImageGalleryView *)galleryView atIndex:(NSInteger)index callback:(void(^)(UIImage *))callback;
 @end
 
+@protocol MAKImageGalleryViewDelegate <NSObject>
 
-@interface MAKImageGalleryView : UICollectionView
+-(void)imageGallery:(MAKImageGalleryView *)galleryView didChangeImage:(NSInteger)index;
+
+@end
+
+@interface MAKImageGalleryView : UICollectionView <UIAppearance>
 @property (weak, nonatomic) id<MAKImageGalleryViewDataSource> imageGalleryDataSource;
+@property (weak, nonatomic) id<MAKImageGalleryViewDelegate> imageGalleryDelegate;
 @property (assign, nonatomic) BOOL changeImagesAutormatically;
 /**
  * Image will be shown during this time
@@ -37,4 +43,7 @@
 @property (assign, nonatomic) NSTimeInterval imageChangingDelay;
 @property (assign, nonatomic) NSInteger selectedIndex;
 - (void)setSelectedIndex:(NSInteger)selectedIndex animated:(BOOL)animated;
+
+@property (nonatomic) UIColor* pageTintColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic) UIColor* currentPageTintColor UI_APPEARANCE_SELECTOR;
 @end
