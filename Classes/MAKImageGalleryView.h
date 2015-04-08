@@ -25,9 +25,15 @@
 - (void)loadImageInGallery:(MAKImageGalleryView *)galleryView atIndex:(NSInteger)index callback:(void(^)(UIImage *))callback;
 @end
 
+@protocol MAKImageGalleryViewDelegate <NSObject>
+
+-(void)imageGallery:(MAKImageGalleryView *)galleryView didChangeImage:(NSInteger)index;
+
+@end
 
 @interface MAKImageGalleryView : UICollectionView <UIAppearance>
 @property (weak, nonatomic) id<MAKImageGalleryViewDataSource> imageGalleryDataSource;
+@property (weak, nonatomic) id<MAKImageGalleryViewDelegate> imageGalleryDelegate;
 @property (assign, nonatomic) BOOL changeImagesAutormatically;
 /**
  * Image will be shown during this time
